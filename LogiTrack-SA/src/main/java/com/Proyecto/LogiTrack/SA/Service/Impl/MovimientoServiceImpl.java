@@ -144,7 +144,7 @@ public class MovimientoServiceImpl implements MovimientoService {
     }
 
     @Override
-    public List<MovimientoDtoResponse> listar(){
+    public List<MovimientoDtoResponse> listarrecientes(){
         return movimientoRepository.findAll().stream().map(movimientoMapper::entityToDto).toList();
     }
 
@@ -177,28 +177,9 @@ public class MovimientoServiceImpl implements MovimientoService {
         return movimientoRepository.findByBodegaDestino_Id(bodegaId).stream().map(movimientoMapper::entityToDto).toList();
     }
 
-
     @Override
-    public List<MovimientoDtoResponse> buscarFechas(
-            LocalDateTime fechaInicio,
-            LocalDateTime fechaFin) {
-
-        if (fechaInicio == null || fechaFin == null) {
-            throw new BussinesRuleException(
-                    "Debe indicar una fecha inicial y una fecha final"
-            );
-        }
-
-        if (fechaInicio.isAfter(fechaFin)) {
-            throw new BussinesRuleException(
-                    "La fecha inicial no puede ser posterior a la fecha final"
-            );
-        }
-
-        return movimientoRepository.findByFechaBetween(fechaInicio, fechaFin)
-                .stream()
-                .map(movimientoMapper::entityToDto)
-                .toList();
+    public List<MovimientoDtoResponse> buscarFechas(LocalDateTime fechaInicio, LocalDateTime fechaFin){
+        if (fechaInicio.isAfter(fechaFin)) {throw new BussinesRuleException("La fecha inicial no puede ser posterior a la fecha final");}
+        return movimientoRepository.findByFechaBetween(fechaInicio, fechaFin).stream().map(movimientoMapper::entityToDto).toList();
     }
-
 }

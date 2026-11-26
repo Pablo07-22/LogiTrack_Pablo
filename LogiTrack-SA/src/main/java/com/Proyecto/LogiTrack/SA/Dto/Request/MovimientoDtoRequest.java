@@ -39,4 +39,4 @@ public record MovimientoDtoRequest(
         @Valid
         List<DetalleMovimientoDtoRequest> detalles
 
-) {}
+) { }

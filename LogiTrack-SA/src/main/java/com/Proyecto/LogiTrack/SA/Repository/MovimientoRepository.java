@@ -9,8 +9,7 @@ import java.util.List;
 
 public interface MovimientoRepository extends JpaRepository<Movimiento, Long> {
 
-    List<Movimiento> findByTipoMovimiento(
-            Movimiento.TipoMovimiento tipoMovimiento
+    List<Movimiento> findByTipoMovimiento(Movimiento.TipoMovimiento tipoMovimiento
     );
 
     List<Movimiento> findByUsuarioResponsable_Id(Long usuarioId);

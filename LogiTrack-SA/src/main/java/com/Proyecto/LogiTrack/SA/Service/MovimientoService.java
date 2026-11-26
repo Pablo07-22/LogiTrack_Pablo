@@ -14,7 +14,7 @@ public interface MovimientoService {
 
     void eliminar(Long id);
 
-    List<MovimientoDtoResponse> listar();
+    List<MovimientoDtoResponse> listarrecientes();
 
     MovimientoDtoResponse buscarId(Long id);
 

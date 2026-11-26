@@ -9,7 +9,6 @@ import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
-import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -20,7 +19,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/movimiento")
+@RequestMapping("/reporte/movimientos")
 @RequiredArgsConstructor
 @Tag(name = "Movimientos", description = "Registro y consulta de movimientos de inventario")
 public class MovimientoController {
@@ -38,10 +37,10 @@ public class MovimientoController {
     }
 
     @GetMapping
-    @Operation(summary = "Listar movimientos", description = "Obtiene todos los movimientos registrados.")
+    @Operation(summary = "Listar movimientos recientes", description = "Obtiene todos los movimientos recientes.")
     @ApiResponse(responseCode = "200", description = "Movimientos obtenidos correctamente")
-    public ResponseEntity<List<MovimientoDtoResponse>> listar() {
-        return ResponseEntity.ok(movimientoService.listar());
+    public ResponseEntity<List<MovimientoDtoResponse>> listarRecientes() {
+        return ResponseEntity.ok(movimientoService.listarrecientes());
     }
 
     @GetMapping("/{id}")
@@ -84,18 +83,10 @@ public class MovimientoController {
 
 
     @GetMapping("/fechas")
-    @Operation(
-            summary = "Buscar movimientos por fechas",
-            description = "Consulta movimientos dentro de un intervalo de fechas. Formato: yyyy-MM-dd'T'HH:mm:ss."
-    )
+    @Operation(summary = "Buscar movimientos por fechas", description = "Consulta movimientos dentro de un intervalo de fechas. Formato: yyyy-MM-dd'T'HH:mm:ss.")
     @ApiResponse(responseCode = "200", description = "Consulta realizada correctamente")
-    public ResponseEntity<List<MovimientoDtoResponse>> buscarFechas(
-            @RequestParam LocalDateTime fechaInicio,
-            @RequestParam LocalDateTime fechaFin) {
-
-        return ResponseEntity.ok(
-                movimientoService.buscarFechas(fechaInicio, fechaFin)
-        );
+    public ResponseEntity<List<MovimientoDtoResponse>> buscarFechas(@RequestParam LocalDateTime fechaInicio, @RequestParam LocalDateTime fechaFin) {
+        return ResponseEntity.ok(movimientoService.buscarFechas(fechaInicio, fechaFin));
     }
 
 }
